@@ -1,7 +1,7 @@
-###Q1. Remaove Duplicates from Sorted Linked list 
+## Q1. Remaove Duplicates from Sorted Linked list 
 
-####Approach 1: Took two pointers curr and next. If the values are equal we will just move the next pointer and when the value are differnt, then we are moving the curr pointer as well in order to remove the duplicate.
-''' 
+### Approach 1: Took two pointers curr and next. If the values are equal we will just move the next pointer and when the value are differnt, then we are moving the curr pointer as well in order to remove the duplicate.
+```
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         ListNode curr = head;
@@ -32,12 +32,12 @@ class Solution {
         
     }
 }
-'''
+```
 Here Time Complexity - O(n)
     Space complexity - O(1)
 
-Approach 2: 
-'''
+### Approach 2: 
+```
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
     if(head == null){
@@ -58,7 +58,7 @@ class Solution {
         
     }
 }
-'''
+```
 
 TC - O(N)
 SC - O(1)
