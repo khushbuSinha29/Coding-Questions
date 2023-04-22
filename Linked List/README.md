@@ -63,3 +63,48 @@ class Solution {
 TC - O(N)
 SC - O(1)
 
+## Q2. Remove duplicates from unsorted linked list.
+
+```
+class Solution
+{
+    //Function to remove duplicates from unsorted linked list.
+    public Node removeDuplicates(Node head) 
+    {
+         // Your code here
+         if(head==null){
+             return null;
+         }
+         Node temp = head;
+         
+         int maxnum=-1;
+        //  Finding the maximum number in the linked list
+         while(temp!=null){
+             if(temp.data>maxnum){
+                 maxnum= temp.data;
+             }
+             temp = temp.next;
+         }
+         
+        
+         int hashArr[] = new int[maxnum+1];
+         temp = head;
+         Node prev = null;
+         
+        //  Checking for the values in the arr. If the val is not present in the array
+        // we increment the value of arr and move the pointers. If the value already came before
+        // then in that case we move the current pointer to next and previous pointer to the curr pointer.
+         while(temp!=null){
+             if(hashArr[temp.data]==0){
+                 hashArr[temp.data]++;
+                 prev = temp;
+                 temp = temp.next;
+             }else{
+                 temp = temp.next;
+                 prev.next = temp;
+             }
+         }
+         return head;
+    }
+}
+```
