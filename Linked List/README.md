@@ -234,6 +234,67 @@ TC- O(n), SC- O(1)
 
 TC-O(N), SC-O(1)
 
+## Q4: Given a list of 0 , 1 and 2 sort it.
+
+####Approach 1:
+```
+class Solution
+{
+    static Node insertToTail(Node tail, Node curr){
+        tail.next = curr;
+        tail = curr;
+        return curr;
+    }
+    //Function to sort a linked list of 0s, 1s and 2s.
+    static Node segregate(Node head)
+    {
+       Node zeroHead = new Node(-1);
+       Node zeroTail = zeroHead;
+       Node oneHead = new Node(-1);
+       Node oneTail = oneHead;
+       Node twoHead = new Node(-1);
+       Node twoTail = twoHead;
+       
+       Node curr = head;
+    //   creating 3 seperate list. 
+       while(curr != null){
+           int val = curr.data;
+           if(val == 0){
+            zeroTail =  insertToTail(zeroTail, curr);
+            // zeroTail.next = curr;
+            // zeroTail = curr;
+           }
+           else if(val == 1){
+             oneTail =  insertToTail(oneTail, curr);
+            // oneTail.next = curr;
+            // oneTail = curr;
+           }else{
+             twoTail = insertToTail(twoTail, curr);
+            // twoTail.next = curr;
+            // twoTail = curr;
+           }
+           curr = curr.next;
+       }
+       
+    //   merge 2 list 
+    if(oneHead.next != null ){
+    //1s exist 
+        zeroTail.next = oneHead.next;       
+        
+    } 
+    else{
+        zeroTail.next = twoHead.next;
+    }
+    oneTail.next = twoHead.next;
+    twoTail.next = null;
+    head = zeroHead.next;
+    // System.out.println(head.data);
+    return head;
+}    
+}
+
+```
+
 #### Approach 2:
 We will be creating 3 seperate list for 0, 1 and 2. And later will merge all of them.
 ```
