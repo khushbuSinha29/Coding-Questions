@@ -475,3 +475,103 @@ class Solution {
 }
 
 ```
+
+## Q6: Check if the linked list is palindrome or not
+
+Approach 1: Take an extra array, will copy the list data to array and then will check palindrome over array.
+
+```
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+
+        ListNode temp = head;
+        int countNode = 0;
+        while(temp != null){
+            countNode++;
+            temp = temp.next;
+        }
+        int arr[] = new int[countNode];
+        temp=head;
+        int i=0;
+        // copying values from list to array
+        while(temp!=null){
+            arr[i]=temp.val;
+            i++;
+            temp=temp.next;
+        }
+
+        // checking for palindrome in array
+        i=0;
+        int j= arr.length-1;
+        while(i<=j){
+            if(arr[i] != arr[j]){
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+        
+    }
+}
+
+```
+
+Approach 2: Here find the mid of the list, then from mid.next to null revese the 2nd half and then check for the values in both the halves, if differ then not palindrome, if same then palindrome.
+
+```
+ ListNode getMid(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head.next;
+
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+    ListNode reverse(ListNode temp){
+        ListNode curr = temp;
+        ListNode next = null;
+        ListNode prev = null;
+
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+    public boolean isPalindrome(ListNode head) {
+        
+        if(head == null || head.next == null){
+            return true;
+        }
+        // find mid
+        ListNode mid = getMid(head);
+
+        // reverse list after mid
+        ListNode temp = mid.next;
+        mid.next = reverse(temp);
+
+        // check both the halves , 1st from head to mid and 2nd from mid.next to null.
+        ListNode head1 = head;
+        ListNode head2 = mid.next;
+
+        while(head2 != null){
+            if(head1.val != head2.val){
+                return false;
+            }
+            head1 = head1.next;
+            head2 = head2.next;
+        }
+        // repeat step 2 , in order to make the list same.
+        temp = mid.next;
+        mid.next = reverse(temp);
+        
+        return true;
+
+    }
+
+```
