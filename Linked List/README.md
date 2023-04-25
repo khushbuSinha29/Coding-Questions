@@ -575,3 +575,58 @@ Approach 2: Here find the mid of the list, then from mid.next to null revese the
     }
 
 ```
+
+## Q7 : Add 2 numbers represented by linked list 
+
+```
+class Solution{
+    static Node reverse(Node head){
+        Node prev = null;
+        Node curr = head;
+        Node next = null;
+        
+        while(curr!=null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+     
+        return prev;
+        
+    }
+    //Function to add two numbers represented by linked list.
+    static Node addTwoLists(Node first, Node second){
+        // code here
+        // return head of sum list
+        
+       first = reverse(first);
+       second = reverse(second);
+       
+       int carry = 0;
+       Node temp1 = first;
+       Node temp2 = second;
+       Node sum = null;
+       while(temp1!=null || temp2!=null || carry>0){
+           int newVal = carry;
+           if(temp1!=null)
+                newVal +=temp1.data;
+            
+            if(temp2!=null)
+                newVal +=temp2.data;
+                
+            carry = newVal/10;
+            newVal = newVal%10;
+            
+            Node newNode = new Node(newVal);
+            newNode.next = sum;
+            sum = newNode;
+            if(temp1!=null)
+                temp1 = temp1.next;
+            if(temp2!=null)
+                temp2 = temp2.next;
+       }
+        return sum;
+    }
+}
+```
