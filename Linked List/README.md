@@ -630,3 +630,69 @@ class Solution{
     }
 }
 ```
+
+## Q8. Clone a linked list with next and random pointers.
+
+Approach 1: First we copy the linked list without considering the random link and normally cloned it. After that we created a map such that it contains the orignal list and the cloned list mapping like 1--1, 2---2, 3--3 so on. Next  we are traversing through the original list and setting the cloned.random = oldtonewnode[orginal.random], say for setting the 1 node random link clone we can check the original random link and then put that in oldnewnode which has track for every link.
+
+```
+
+class Clone {
+    //Function to clone a linked list with next and random pointer.
+    void insertAtTail(Node head, Node tail, int d){
+        Node newNode = new Node(d);
+        if(head == null){
+            head = newNode;
+            tail = newNode;
+            return;
+        }else{
+            tail.next = newNode;
+            tail = newNode;
+        }
+    }
+    Node copyList(Node head) {
+        // your code here
+        // create a clone list
+        Node cloneHead = null;
+        Node cloneTail = null;
+        Node temp = head;
+        
+        while(temp != null){
+            Node newNode = new Node(temp.data);
+            if(cloneHead == null){
+                cloneHead = newNode;
+                cloneTail = newNode;
+            }else{
+                cloneTail.next = newNode;
+                cloneTail = newNode;
+            }
+                temp = temp.next;
+        }
+        
+        //step 2: Create a map
+        Map<Node, Node> oldToNewNode = new HashMap<Node, Node>();
+        Node originalNode = head;
+        Node cloneNode = cloneHead;
+        while(originalNode != null){
+            oldToNewNode.put(originalNode, cloneNode);
+            originalNode = originalNode.next;
+            cloneNode = cloneNode.next;
+        }
+        // resetting the pointers
+        originalNode = head;
+        cloneNode = cloneHead;
+        
+        //Step 3: mapping the original value and putting the cloned one.
+        while(originalNode != null){
+            cloneNode.arb = oldToNewNode.get(originalNode.arb);
+            originalNode = originalNode.next;
+            cloneNode = cloneNode.next;
+        }
+        return cloneHead;
+        
+        
+    }
+}
+
+```
+TC- O(N), SC-O(N)
