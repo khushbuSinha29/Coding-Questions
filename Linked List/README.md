@@ -696,3 +696,72 @@ class Clone {
 
 ```
 TC- O(N), SC-O(N)
+
+Approach 2: 
+
+```
+class Clone {
+    //Function to clone a linked list with next and random pointer.
+    Node copyList(Node head) {
+        
+        // Step 1: create a clone list
+        Node cloneHead = null;
+        Node cloneTail = null;
+        
+        Node temp = head;
+        while( temp != null){
+            Node newNode = new Node(temp.data);
+            if( cloneHead == null){
+                cloneHead = newNode;
+                cloneTail = newNode;
+            }
+            cloneTail.next = newNode;
+            cloneTail = newNode;
+            temp = temp.next;
+        }
+        
+        // Step 2 : add cloneNodes inbetween original list nodes
+        Node originalNode = head;
+        Node cloneNode = cloneHead;
+        
+        while(originalNode != null){
+            Node next = originalNode.next;
+            originalNode.next = cloneNode;
+            originalNode = next;
+            
+            next = cloneNode.next;
+            cloneNode.next = originalNode;
+            cloneNode = next;
+        }
+        // Step 3 : random pointer copy 
+        temp= head;
+        while(temp != null){
+            
+            if(temp.next != null){
+            temp.next.arb = temp.arb!=null ? temp.arb.next : temp.arb;
+        
+            }
+            temp = temp.next.next;
+            
+        }
+        // Step 4 : revert changes done in step 2
+        originalNode = head;
+        cloneNode = cloneHead;
+        while(originalNode != null){
+            originalNode.next = cloneNode.next;
+            originalNode = originalNode.next;
+            
+            if(originalNode != null){
+                
+            cloneNode.next = originalNode.next;
+            }
+            cloneNode = cloneNode.next;
+            
+        }
+        
+        // Step 5 : return ans
+        return cloneHead;
+    }
+}
+```
+TC- O(N), SC-O(1)
