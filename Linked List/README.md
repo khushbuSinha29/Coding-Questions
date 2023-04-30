@@ -765,3 +765,103 @@ class Clone {
 }
 ```
 TC- O(N), SC-O(1)
+
+Q9: Merge Sort in linked list
+
+```
+class Solution
+{
+    static Node findMid(Node head){
+        Node slow = head;
+        Node fast = head.next;
+        
+        while(fast != null && fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+    
+    static Node merge(Node left, Node right){
+        if(left == null)
+            return right;
+        if(right == null)
+            return left;
+            
+        Node ans = new Node(-1);
+        Node temp = ans;
+        
+        while(left != null && right != null){
+            if(left.data < right.data){
+                temp.next = left;
+                temp = left;
+                left = left.next;
+            }else{
+                temp.next = right;
+                temp = right;
+                right = right.next;
+            }
+        }
+        
+        while(left != null){
+            temp.next = left;
+            temp = left;
+            left = left.next;
+        }
+        while(right != null){
+            temp.next = right;
+            temp = right;
+            right = right.next;
+        }
+        ans= ans.next;
+        return ans;
+    }
+    //Function to sort the given linked list using Merge Sort.
+    static Node mergeSort(Node head)
+    {
+        // add your code here
+        // base case
+        if(head == null || head.next == null){
+            return head;
+        }
+        
+        // finding the mid and dividing the list in 2 halves
+        Node mid = findMid(head);
+        
+        Node left = head;
+        Node right = mid.next;
+        mid.next = null;
+        
+        // recursively call to sort both halves
+        left = mergeSort(left);
+        right = mergeSort(right);
+        
+        // merge both left and right halves
+        Node result = merge(left, right);
+        
+        return result;
+    }
+}
+```
+TC - O(nlogn), SC-O(logn)
+
+Q. Why we prefer merge sort in Linked list and quick sort in arrays
+
+Merge sort is often preferred for Linked lists because of the following reasons:
+
+1. Linked lists are not contiguous in memory, so it's not possible to use random access to elements like we can do in arrays. Therefore, we can't easily partition the linked list for quick sort.
+
+2. Merge sort uses a divide-and-conquer approach, which can be easily implemented with linked lists. We can divide the linked list into two halves, sort them recursively, and then merge the sorted halves.
+
+3. Merge sort has a stable sorting algorithm, which means that the relative order of equal elements is preserved. This is important when working with linked lists because we need to preserve the order of nodes while sorting.
+
+On the other hand, quick sort is often preferred for arrays because:
+
+1. Quick sort is an in-place sorting algorithm, which means it doesn't require extra memory to sort an array. In contrast, merge sort requires extra space to store the sorted subarrays.
+
+2. Quick sort has better cache performance for arrays, which means it's faster in practice. This is because quick sort works by partitioning the array into subarrays, and these subarrays can fit into the cache more easily than the subarrays created by merge sort.
+
+3.Quick sort has a smaller constant factor than merge sort, which means it's faster in practice for small arrays. However, for larger arrays, the difference in performance between quick sort and merge sort is negligible.
+
+Q. 10 Flatten a linked list.
+
