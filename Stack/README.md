@@ -75,3 +75,31 @@ class Stacks
     }
 }
 ```
+## Q2. Reverse a string using stack
+
+```
+class Solution {
+    
+    public String reverse(String S){
+        //code here
+        Stack<Character> s = new Stack<>();
+        String newString = "";
+        int len = S.length();
+        for(int i=0;i<len;i++){
+            char ch = S.charAt(i);
+            s.push(ch);
+        }
+        
+        while(!s.empty()){
+            char c = s.pop();
+            newString = newString + c;
+            // s.pop();
+            
+        }
+        return newString;
+    }
+
+}
+```
+TC - O(N), SC- O(N)
+
