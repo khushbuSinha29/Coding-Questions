@@ -103,3 +103,28 @@ class Solution {
 ```
 TC - O(N), SC- O(N)
 
+##Q3. Delete middle element of a stack
+```
+class Solution
+{
+    //Function to delete middle element of a stack.
+    public void solve(Stack<Integer>s, int size, int count){
+        if(count == size/2){
+            s.pop();
+            return;
+        }
+        int num = s.peek();
+        s.pop();
+        
+        // recursive call
+        solve(s, size, count+1);
+        s.push(num);
+    }
+    public void deleteMid(Stack<Integer>s,int sizeOfStack){
+        // code here
+        int count = 0;
+        solve(s, sizeOfStack, count);
+    } 
+}
+
+```
