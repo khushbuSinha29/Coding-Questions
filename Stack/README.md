@@ -130,6 +130,8 @@ class Solution
 ```
 ## Q4. Valid Parentheses
 
+Approach 1 : using stack
+
 ```
 class Solution {
     public boolean isValid(String s) {
@@ -162,4 +164,86 @@ class Solution {
     }
 }
 ```
+TC- O(N), SC-O(N)
 
+Approach 2 - Without using stack
+Taking a character array to store the open parantheses and maintaining count for that while return we decrement the counter and check for the closed parantheses.
+
+```
+class Solution {
+    public boolean isValid(String s) {
+
+        char charArray[] = new char[s.length()];
+        int count=-1;
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if(ch=='(' || ch=='[' || ch=='{'){
+                charArray[++count]=ch;
+            }else{
+                if(count>=0 && ((charArray[count]=='(' && ch==')') || (charArray[count]=='[' && ch==']') || (charArray[count]=='{' && ch=='}'))){
+                    --count;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return count==-1;
+        
+    }
+}
+```
+TC-O(N), SC-O(N)
+
+## Q5. Insert an element at the bottom of the stack
+
+```
+class Solution
+{
+    //Function to delete middle element of a stack.
+    public void solve(Stack<Integer>s, int x){
+        if(s.isEmpty()){
+            s.pop();
+            return;
+        }
+        int num = s.peek();
+        s.pop();
+        
+        // recursive call
+        solve(s, x);
+        s.push(num);
+    }
+    public void pushBottom(Stack<Integer>s,int x){
+        
+        solve(s, x);
+    } 
+}
+```
+TC- O(N), SC-O(1)
+
+## Q6. Reverse a stack
+
+```
+class Solution
+{ 
+    static void insertAtBottom(Stack<Integer> s, int n){
+        if(s.isEmpty()){
+            s.push(n);
+            return;
+        }
+        int num = s.pop();
+        insertAtBottom(s, n);
+        s.push(num);
+    }
+    static void reverse(Stack<Integer> s)
+    {
+        if(s.isEmpty()){
+            return;
+        }
+        int num = s.pop();
+        
+        reverse(s);
+        insertAtBottom(s, num);
+    }
+}
+```
+TC - O(N2), SC-O(N)
