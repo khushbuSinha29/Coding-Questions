@@ -247,3 +247,113 @@ class Solution
 }
 ```
 TC - O(N2), SC-O(N)
+
+## Q7: Sort a stack
+
+```
+class GfG{
+    public void insertSorted(Stack<Integer> s, int val){
+        if(s.isEmpty() || (!s.isEmpty() && s.peek()<val)){
+            s.push(val);
+            return;
+        }
+        int num = s.pop();
+        insertSorted(s,val);
+        s.push(num);
+        
+    }
+	public Stack<Integer> sort(Stack<Integer> s)
+	{
+		//add code here.
+		if(s.isEmpty()){
+		    return s;
+		}
+		int val = s.pop();
+		
+		sort(s);
+		
+		insertSorted(s, val);
+		return s;
+	}
+}
+```
+TC- O(N2), SC-O(N)
+
+## Q8: Expression contain redundant brackets or not
+
+```
+class Solution {
+    public static int checkRedundancy(String s) {
+        // code here
+        Stack<Character> st = new Stack<>();
+        
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            //if contain ( or operator then add it to the stack
+            if(ch=='(' || ch=='+'|| ch=='-'||ch=='*'||ch=='/'){
+                st.push(ch);
+            }
+            else if(ch==')'){
+                // if contain ) then first check if the top has opening bracket if it has then this is redundant for cases like ((b)) but if there is operator then pop the value until you find the ( and then pop the ( again so that we will be checkign the next set. 
+
+                char topCharacter = st.peek();
+                if(topCharacter=='('){
+                    return 1;
+                }else{
+                    while(st.peek()!='('){
+                        st.pop();
+                    }
+                    st.pop();
+                }
+            }
+            
+        }
+        if(st.isEmpty()){
+                return 0;
+            }
+            else{
+                return 1;
+            }
+    }
+}       
+```
+TC- O(N), SC-O(N)
+
+## Q9: minimum cost to make string valid 
+
+```
+int findMinimumCost(String str){
+    //odd condition 
+    if(str.length()%2 == 1){
+        return -1;
+    }
+    Stack<Character> st = new Stack<>();
+
+    for(int i=0;i<str.length(); i++){
+        char ch= str.charAt(i);
+        if(ch=='{'){
+            s.push(ch);
+        }else{
+            //ch is closed brace
+            if(!st.isEmpty() && s.top() = '('){
+                s.pop();
+            }
+            else{
+                s.push(ch);
+            }
+        }
+    }
+    //stack contain invalid expression
+    int a=0, b=0;
+    while(!st.isEmpty()){
+        if(st.top == '('){
+            b++;
+        }else{
+            a++;
+        }
+        s.pop();
+    }
+    int ans = (a+1)/2 + (b+1)/2;
+    return ans;
+}
+```
