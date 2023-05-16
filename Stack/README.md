@@ -357,3 +357,63 @@ int findMinimumCost(String str){
     return ans;
 }
 ```
+
+## Q10. Next smallest element
+
+Approach 1:
+
+```
+class Solution {
+	public static int[] help_classmate(int arr[], int n) 
+	{ 
+	    int newArr[] = new int[n];
+	    boolean hasMin = false;
+	    int k=0;
+	   // outer loop for keeping track of each element
+	    for(int i=0;i<n-1;i++){
+	        int min = -1;
+	       // inner loop for checking for the smallest no.
+	        for(int j=i+1;j<n;j++){
+	            if(arr[j]<arr[i]){
+	                min = arr[j];
+	                hasMin = true;
+	                break;
+	            }
+	        }
+	        if(hasMin){
+	            newArr[k++] = min;
+	        }
+	        else{
+	            newArr[k++] = -1;
+	        }
+	        hasMin=false;
+	    }
+	    newArr[n-1] = -1;
+	    return newArr;
+	} 
+}
+
+```
+
+Approach 2: using stack
+
+```
+class Solution {
+	public static int[] help_classmate(int arr[], int n) 
+	{ 
+	    // Your code goes here
+	    int ans[] = new int[n];
+	    Stack<Integer> s = new Stack<>();
+	    s.push(-1);
+	    for(int i=n-1;i>=0;i--){
+	        int curr = arr[i];
+	        while(s.peek()>= curr){
+	            s.pop();
+	        }
+	        ans[i] = s.peek();
+	        s.push(curr);
+	    }
+	    return ans;
+	} 
+}
+```
